@@ -1,4 +1,5 @@
 const express = require('express'); //Import express
+const bodyParser = require('body-parser'); //Import body-parser pour extraire des objets JSON en JS
 
 const app = express(); //Permet de créer une application express
 
@@ -8,6 +9,15 @@ app.use((req, res, next) => { //Ajoute CORS dans l'entête de toutes les requêt
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS'); //Verbe que l'on autorise
     next();
 });
+
+app.use(bodyParser.json()); // Tranforme le corps de la requête en objet JS pour toutes les routes
+
+app.post('/api/stuff', (req, res, next) => { // POST
+    console.log(req.body); //Corps de la requête
+    res.status(201).json({
+      message: 'Objet créé !'
+    });
+  });
 
 app.use('/api/stuff', (req, res, next) => { // '/api/stuff' = url visé par l'appli
     const stuff = [
