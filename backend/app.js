@@ -31,6 +31,20 @@ app.post('/api/stuff', (req, res, next) => { // POST
         .catch(error => res.status(400).json({ error }));
 });
 
+// Modifier un objet
+app.put('/api/stuff/:id', (req, res, next) => {
+    Thing.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id }) // { objet de comparaison },{ ancien objet : nouveau objet }
+      .then(() => res.status(200).json({ message: 'Objet modifié !'}))
+      .catch(error => res.status(400).json({ error }));
+});
+
+//Supprimer un objet
+app.delete('/api/stuff/:id', (req, res, next) => {
+    Thing.deleteOne({ _id: req.params.id })
+        .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
+        .catch(error => res.status(400).json({ error }));
+});  
+
 // Récupérer un Thing spécifique
 app.get('/api/stuff/:id', (req, res, next) => { // ':' rendre accessible en tant que paramètre
     Thing.findOne({ _id: req.params.id }) // Récupérère que l'objet dont l'id est la même que l'url de la route
