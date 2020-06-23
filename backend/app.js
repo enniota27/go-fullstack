@@ -1,6 +1,7 @@
 const express = require('express'); //Import express
 const bodyParser = require('body-parser'); //Import body-parser pour extraire des objets JSON en JS
 const mongoose = require('mongoose'); // Import mongosse pour la base de donnée
+const path = require('path'); //Donne accès aux chemins d'un fichier
 
 const app = express(); //Permet de créer une application express
 
@@ -21,6 +22,8 @@ app.use((req, res, next) => { //Ajoute CORS dans l'entête de toutes les requêt
 });
 
 app.use(bodyParser.json()); // Tranforme le corps de la requête en objet JS pour toutes les routes
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/api/stuff', stuffRoutes); // /api/stuff = racine des routes
 app.use('/api/auth', userRoutes);
