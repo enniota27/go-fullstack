@@ -5,6 +5,7 @@ const mongoose = require('mongoose'); // Import mongosse pour la base de donnée
 const app = express(); //Permet de créer une application express
 
 const stuffRoutes = require('./routes/stuff'); //Importe le fichier stuff.js
+const userRoutes = require('./routes/user');
 
 mongoose.connect('mongodb+srv://Antoine27:mdp27@cluster0.5arjs.mongodb.net/<dbname>?retryWrites=true&w=majority', // Connection à la base de donnée
   { useNewUrlParser: true,
@@ -21,6 +22,7 @@ app.use((req, res, next) => { //Ajoute CORS dans l'entête de toutes les requêt
 
 app.use(bodyParser.json()); // Tranforme le corps de la requête en objet JS pour toutes les routes
 
-app.use('/api/stuff', stuffRoutes);
+app.use('/api/stuff', stuffRoutes); // /api/stuff = racine des routes
+app.use('/api/auth', userRoutes);
 
 module.exports = app; //Exporter la constante app pour y avoir accèder depuis les autres fichiers
